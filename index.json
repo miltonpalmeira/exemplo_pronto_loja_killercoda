@@ -1,0 +1,34 @@
+{
+  "title": "Loja: estoque e pagamento em paralelo",
+  "description": "A sessão começa vazia. A turma cria banco, serviços e a loja. No fim, sobe e mede. Sem cartão.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "foreground": "foreground.sh"
+    },
+    "steps": [
+      {
+        "title": "Criar o banco e o estoque",
+        "text": "step1.md"
+      },
+      {
+        "title": "Criar o pagamento",
+        "text": "step2.md"
+      },
+      {
+        "title": "Criar a loja, o Compose e a medida",
+        "text": "step3.md"
+      },
+      {
+        "title": "Depois de criar os arquivos",
+        "text": "step4.md"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}

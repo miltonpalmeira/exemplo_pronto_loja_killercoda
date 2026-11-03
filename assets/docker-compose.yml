@@ -1,0 +1,88 @@
+# Conceito, UN4 S2 — contêineres.
+# O banco guarda saldo e limite. O paralelo não está aqui.
+# O paralelo está em loja/app.py, na função em_paralelo, no asyncio.gather.
+
+services:
+  # Conceito, UN3 S1 — dois databases no mesmo servidor: estoque e pagamento.
+  # A loja não recebe a senha. Senha da aula, não é segredo de produção.
+  banco:
+    image: postgres:16-alpine
+    container_name: banco
+    restart: unless-stopped
+    networks: [loja]
+    environment:
+      POSTGRES_USER: loja
+      POSTGRES_PASSWORD: loja
+      POSTGRES_DB: loja
+    volumes:
+      - ./postgres/init.sh:/docker-entrypoint-initdb.d/init.sh
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U loja -d loja"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+      start_period: 5s
+
+  # Conceito, UN3 S1 — memória privada. Este processo só abre o database estoque.
+  estoque:
+    build: ./estoque
+    container_name: estoque
+    restart: unless-stopped
+    networks: [loja]
+    environment:
+      ESTOQUE_DATABASE_URL: postgresql://loja:loja@banco:5432/estoque
+    depends_on:
+      banco:
+        condition: service_healthy
+    ports:
+      - "8001:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+
+  # Conceito, UN3 S1 — outra memória. O limite fica no database pagamento.
+  pagamento:
+    build: ./pagamento
+    container_name: pagamento
+    restart: unless-stopped
+    networks: [loja]
+    environment:
+      PAGAMENTO_DATABASE_URL: postgresql://loja:loja@banco:5432/pagamento
+    depends_on:
+      banco:
+        condition: service_healthy
+    ports:
+      - "8002:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+
+  # Cliente. Conceito, UN3 S2 — nomeação: a URL usa o nome do serviço, não um IP.
+  # A loja não tem DATABASE_URL. O dado chega pela mensagem.
+  loja:
+    build: ./loja
+    container_name: loja
+    restart: unless-stopped
+    networks: [loja]
+    environment:
+      ESTOQUE_URL: http://estoque:8000
+      PAGAMENTO_URL: http://pagamento:8000
+    depends_on:
+      estoque:
+        condition: service_healthy
+      pagamento:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+networks:
+  loja:
+    name: loja-paralela
