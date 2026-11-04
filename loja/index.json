@@ -1,6 +1,6 @@
 {
   "title": "Loja: estoque e pagamento em paralelo",
-  "description": "A sessão começa vazia. A turma cria banco, serviços e a loja. No fim, sobe e mede. Sem cartão.",
+  "description": "A pasta da loja já chega pronta. Um comando sobe banco, estoque, pagamento e loja. Outro mede o paralelo. Sem cartão.",
   "details": {
     "intro": {
       "text": "intro.md",
@@ -8,24 +8,32 @@
     },
     "steps": [
       {
-        "title": "Criar o banco e o estoque",
+        "title": "Subir e medir",
         "text": "step1.md"
       },
       {
-        "title": "Criar o pagamento",
+        "title": "Parar o pagamento",
         "text": "step2.md"
-      },
-      {
-        "title": "Criar a loja, o Compose e a medida",
-        "text": "step3.md"
-      },
-      {
-        "title": "Depois de criar os arquivos",
-        "text": "step4.md"
       }
     ],
     "finish": {
       "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        {"file": "docker-compose.yml", "target": "~/loja/"},
+        {"file": "pedidos.sh", "target": "~/loja/", "chmod": "+x"},
+        {"file": "postgres/init.sh", "target": "~/loja/postgres/", "chmod": "+x"},
+        {"file": "estoque/Dockerfile", "target": "~/loja/estoque/"},
+        {"file": "estoque/app.py", "target": "~/loja/estoque/"},
+        {"file": "estoque/requirements.txt", "target": "~/loja/estoque/"},
+        {"file": "pagamento/Dockerfile", "target": "~/loja/pagamento/"},
+        {"file": "pagamento/app.py", "target": "~/loja/pagamento/"},
+        {"file": "pagamento/requirements.txt", "target": "~/loja/pagamento/"},
+        {"file": "loja/Dockerfile", "target": "~/loja/loja/"},
+        {"file": "loja/app.py", "target": "~/loja/loja/"},
+        {"file": "loja/requirements.txt", "target": "~/loja/loja/"}
+      ]
     }
   },
   "backend": {

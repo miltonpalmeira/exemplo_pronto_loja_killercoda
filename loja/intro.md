@@ -1,9 +1,7 @@
 # Loja: estoque e pagamento em paralelo
 
-Tudo acontece neste navegador. A pasta `~/loja` começa vazia. Nada é copiado pronto.
+A pasta `~/loja` já chega com banco, estoque, pagamento, loja e o Compose. Não há arquivo para criar.
 
-A turma cria, nesta ordem: o banco, o estoque, o pagamento, a loja, o Compose e o script da medida. FastAPI é o contrato. Postgres é a memória de cada serviço. O `asyncio.gather` é a última função da loja.
+O primeiro passo sobe tudo e mede. A sequência fica perto de 0,8 s. O paralelo fica perto de 0,4 s. O segundo passo para só o pagamento e mostra a venda que deixa de confirmar.
 
-O passo 4 é o que se faz depois que todos os arquivos existem: subir, medir, olhar a tabela e parar o pagamento.
-
-A sessão dura cerca de uma hora e não pede cartão. O primeiro `docker compose up` baixa as imagens e leva alguns minutos. Por isso os arquivos nascem antes, e o sobe fica todo no último passo.
+A primeira subida baixa as imagens e leva alguns minutos. A sessão dura cerca de uma hora e não pede cartão.

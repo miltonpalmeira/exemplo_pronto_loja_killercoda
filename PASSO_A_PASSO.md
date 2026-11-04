@@ -1,8 +1,6 @@
 # Passo a passo — publicar e rodar a loja no Killercoda
 
-Tudo abaixo está na ordem. A parte do professor é feita uma vez. A parte da sessão é o que a turma executa no navegador, do zero.
-
-A pasta `~/loja` da sessão começa vazia. Os blocos dos passos 1, 2 e 3 criam os arquivos. O passo 4 sobe e mede.
+Tudo abaixo está na ordem. A parte do professor é feita uma vez. Na sessão, a pasta `~/loja` já chega pronta. A turma sobe e mede. Não digita o código.
 
 ## 1. Nome do perfil no Killercoda
 
@@ -76,25 +74,11 @@ Se a página abrir vazia, o commit no GitHub não basta. Confira, nesta ordem:
 
 O link dessa tela é o que os alunos abrem. Cada um entra com a conta gratuita e clica em **Start**. A sessão dura cerca de uma hora e não pede cartão. A turma não usa o GitHub.
 
-## 6. Na sessão: criar os arquivos
+## 6. Na sessão: subir
 
-A máquina é uma Ubuntu com Docker. A pasta `~/loja` está vazia. Execute, na ordem, cada bloco dos arquivos da tela:
+A máquina é uma Ubuntu com Docker. No início, o Killercoda copia `loja/assets/` para `~/loja`. Banco, estoque, pagamento, loja, Compose e `pedidos.sh` já estão lá.
 
-1. `step1.md` — banco (`init.sh`) e estoque (`requirements.txt`, `Dockerfile`, `app.py`)
-2. `step2.md` — pagamento (`requirements.txt`, `Dockerfile`, `app.py`)
-3. `step3.md` — loja (`requirements.txt`, `Dockerfile`, `app.py`), `docker-compose.yml` e `pedidos.sh`
-
-Cada bloco começa com `cat > ~/loja/...`. Rodar o bloco grava o arquivo. Ainda não há processo no ar.
-
-Confira, no fim do passo 1, o comando que a tela já traz:
-
-```bash
-find ~/loja -type f | sort
-```
-
-## 7. Depois de criar os arquivos: subir e medir
-
-Estes comandos são o passo 4. A primeira vez baixa as imagens e leva alguns minutos.
+O passo **Subir e medir** tem dois blocos. Clicar no bloco executa. O primeiro sobe. A primeira vez baixa as imagens e leva alguns minutos.
 
 ```bash
 cd ~/loja
@@ -102,15 +86,16 @@ docker compose up --build -d
 docker compose ps
 ```
 
-Se a coluna de saúde ainda estiver `starting`, rode de novo:
+Se a coluna ainda estiver `starting`, rode de novo:
 
 ```bash
 docker compose ps
 ```
 
-Meça. Sequência perto de 0,8 s. Paralelo perto de 0,4 s. Speedup perto de 2.
+O segundo bloco mede. Sequência perto de 0,8 s. Paralelo perto de 0,4 s. Speedup perto de 2.
 
 ```bash
+cd ~/loja
 bash pedidos.sh
 ```
 
