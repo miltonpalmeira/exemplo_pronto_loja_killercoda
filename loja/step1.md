@@ -1,6 +1,12 @@
 # Subir e medir
 
-Clique no bloco. Ele sobe o banco, o estoque, o pagamento e a loja. A primeira vez baixa as imagens e leva alguns minutos.
+`cd ~/loja` entra na pasta do projeto. O Compose só acha o `docker-compose.yml` estando aí.
+
+`docker compose up` cria e liga banco, estoque, pagamento e loja. `--build` monta as três imagens Python antes de subir. `-d` devolve o terminal; o processo continua atrás.
+
+`docker compose ps` lista o estado. Espere a coluna sair de `starting`.
+
+A primeira vez baixa as imagens e leva alguns minutos. Clique:
 
 ```
 cd ~/loja
@@ -8,7 +14,7 @@ docker compose up --build -d
 docker compose ps
 ```{{exec}}
 
-Quando a coluna de estado deixar de ficar em `starting`, clique neste bloco. Ele espera o `/health` e mede os quatro pedidos.
+`bash pedidos.sh` espera o `/health` e faz os quatro pedidos. Clique quando o `ps` não mostrar mais `starting`:
 
 ```
 cd ~/loja

@@ -1,6 +1,6 @@
 # Parar o pagamento
 
-A loja não abre o banco. Se o pagamento some, a venda de R$ 120 deixa de confirmar. Clique:
+`docker stop pagamento` para só esse contêiner. Banco, estoque e loja continuam. A loja não abre o banco: sem resposta do pagamento, a venda de R$ 120 deixa de confirmar.
 
 ```
 docker stop pagamento
@@ -8,7 +8,7 @@ cd ~/loja
 bash pedidos.sh
 ```{{exec}}
 
-Ligue de novo e meça outra vez:
+`docker start pagamento` liga de novo o mesmo contêiner, sem montar a imagem outra vez.
 
 ```
 docker start pagamento
